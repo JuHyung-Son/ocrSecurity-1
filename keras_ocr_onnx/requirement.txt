@@ -1,0 +1,5 @@
+tensorflow2.0.0
+argparse
+numpy
+matplotlib
+itertools
