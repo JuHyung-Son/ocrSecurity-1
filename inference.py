@@ -1,10 +1,7 @@
 import time, datetime, argparse, cv2, os
 import ocr7
-from utils.utils import *
 import matplotlib.pyplot as plt
 import time
-from datagenerator.genGenerator import read_record_single_cls, apply_aug_single_cls
-import tensorflow as tf
 os.environ['CUDA_VISIBLE_DEVICES']='0'
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH']='true'
 
