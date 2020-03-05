@@ -28,11 +28,11 @@ def create_ocr_traning_data_word(num_image, min_word=5, max_word=35, background=
     background_image_count = len(background_image_list)
 
     for i in tqdm(range(num_image)):
-        sentence_count = random.randint(10, 15) # parameter
+        sentence_count = random.randint(10, 15)
 
         millis = int(round(time.time() * 1000))
 
-        if os.path.isfile(str(millis) + ".json") is False:
+        if os.path.isfile(str(millis) + "-" + str(i) + ".json") is False:
             custom_info = OrderedDict()
             custom_info["info"] = OrderedDict()
             custom_info["license"] = OrderedDict()
@@ -40,13 +40,13 @@ def create_ocr_traning_data_word(num_image, min_word=5, max_word=35, background=
             custom_info["annotations"] = []
             json.dumps(custom_info, ensure_ascii=False, indent="\t")
         else:
-            with open(str(millis) + ".json", "r") as info:
+            with open(str(millis) + "-" + str(i) + ".json", "r") as info:
                 custom_info = json.load(info)
 
         bg_img = create_blank_image(IMAGE_WIDTH, IMAGE_HEIGHT)
 
         background_ratio = random.randint(0, 99)
-        if background_ratio < background * 100:
+        if background_ratio < background * 100 and background_image_count != 0:
             bg_idx = random.randint(0, background_image_count - 1)
             bg_img = cv2.imread(background_image_list[bg_idx])
             r,c,_ = bg_img.shape
@@ -138,7 +138,7 @@ def create_ocr_traning_data_word(num_image, min_word=5, max_word=35, background=
                     annotations["bbox"].append(bbox_dict)
                 start_position_x += ncols
         
-        file_name = str(millis) + ".jpg"
+        file_name = str(millis) + "-" + str(i) + ".jpg"
 
         bright_ratio = random.randint(0, 99)
         brigt_ran = brightness * 100 / 2
@@ -159,11 +159,11 @@ def create_ocr_traning_data_word(num_image, min_word=5, max_word=35, background=
         custom_info["images"].append(images)
         custom_info["annotations"].append(annotations)
 
-        with open("train_label/" + str(millis) + ".json", 'w', encoding="utf-8") as make_file:
+        with open("train_label/" + str(millis) + "-" + str(i) + ".json", 'w', encoding="utf-8") as make_file:
             json.dump(custom_info, make_file, ensure_ascii=False, indent="\t")
             make_file.close()
 
-def main()
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_image', type=int, default=10)
     parser.add_argument('--background_ratio', type=float, default=0.1)
