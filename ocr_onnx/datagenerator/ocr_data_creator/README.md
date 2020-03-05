@@ -1,3 +1,2 @@
 OCR DATA CREATOR
 
-image
