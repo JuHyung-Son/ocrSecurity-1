@@ -1,15 +1,14 @@
 # OCR DATA CREATOR
 
-# Code
-
 # Usage
+### command
 '''
 python image_creator.py --num_image=1000
 '''
 
+# Annotation
+### example
 '''
-labeling example
-
 "info": {},
 	"license": {},
 	"images": [
