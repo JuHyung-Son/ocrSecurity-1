@@ -2,13 +2,13 @@
 
 # Usage
 ### command
-'''
+```
 python image_creator.py --num_image=1000
-'''
+```
 
 # Annotation
 ### example
-'''
+```
 "info": {},
 	"license": {},
 	"images": [
@@ -56,5 +56,5 @@ python image_creator.py --num_image=1000
         }
     ]
 
-bbox contents -> [center_x, center_y, width, height]
-'''
+### bbox contents -> [center_x, center_y, width, height]
+```
