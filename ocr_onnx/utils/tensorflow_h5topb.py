@@ -20,3 +20,15 @@ def freeze_session(session, keep_var_names=None, output_names=None, clear_device
         # f.write(frozen_graph.SerializeToString())
         return frozen_graph
 
+
+src = "/root/optimization/ocrSecurity/ocr_onnx/outputs/detector/checkpoints/OCR_default/generator_scale_0.h5"
+dst = "/root/optimization/ocrSecurity/ocr_onnx/outputs/detector/checkpoints/OCR_default/generator_scale_0.pb"
+
+
+restored_model = tf.keras.models.load_model(src, compile=True)
+frozen_graph = freeze_session(K.get_session(),
+                              output_names=[out.op.name for out in restored_model.outputs],
+                             clear_devices=True)
+
+tf.train.write_graph(frozen_graph, "/tmp", dst, as_text=False)
+print("finished")

@@ -338,6 +338,8 @@ def build_keras_model(weights_path: str = None, backbone_name='vgg'):
     if backbone_name != 'vgg':
         y = keras.layers.Activation('sigmoid')(y)
     model = keras.models.Model(inputs=inputs, outputs=y)
+    model.summary()
+
     if weights_path is not None:
         if weights_path.endswith('.h5'):
             model.load_weights(weights_path)

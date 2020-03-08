@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="docker_200_tf21" filePermissions="511" folderPermissions="511" autoUploadExternalChanges="true" showNewOnTargetInSync="false">
     <serverData>
       <paths name="201">
         <serverdata>
@@ -16,6 +16,14 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="root@1.209.110.66:8229">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/optimization/ocrSecurity" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
   </component>
 </project>
