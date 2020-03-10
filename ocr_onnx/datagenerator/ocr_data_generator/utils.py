@@ -129,6 +129,22 @@ def create_background_image(num_stamp, stamp_valid = True):
         # file_name = str(millis) + ".jpg"
         # cv2.imwrite("train_image_background/" + file_name, bg_image)
 
+def get_gt_txt(syllable_path, alphabet_path):
+    syllable_list = glob.glob(syllable_path + "/*")
+    alphabet_list = glob.glob(alphabet_path + "/*")
+
+    gt_txt = open("char_gt.txt", 'w')
+
+    for s in syllable_list:
+        gt_txt.write(str(s) + "\n")
+
+    for a in alphabet_list:
+        gt_txt.write(str(a) + "\n")
+
+    gt_txt.close()
+
+# get_gt_txt("selected_syllable", "alphabet_number")    
+
 """
 create training data and annotation file
 """

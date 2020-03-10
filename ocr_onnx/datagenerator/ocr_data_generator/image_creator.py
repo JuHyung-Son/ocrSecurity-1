@@ -129,7 +129,8 @@ def create_ocr_traning_data_word(num_image, min_word=5, max_word=35, background=
 
                 bg_img = bit_operation(bg_img, resized_word_img, start_position_x, start_position_y)
 
-                bbox = [int((2 * start_position_x + ncols) / 2), int((start_position_y + sentence_height) / 2), ncols, sentence_height]
+                # bbox = [int((2 * start_position_x + ncols) / 2), int((start_position_y + sentence_height) / 2), ncols, sentence_height]
+                bbox = [int(start_position_x + (ncols / 2)), int(start_position_y + (sentence_height / 2)), ncols, sentence_height]
 
                 if blank_flag >= spacing * 100:
                     annotations["text"].append(text_dict)
