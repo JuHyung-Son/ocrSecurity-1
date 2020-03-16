@@ -54,7 +54,7 @@ def build_vgg_backbone(inputs):
             'basenet.slice1.12',
             'basenet.slice2.19',
             'basenet.slice3.29',
-            'basenet.slice4.38',
+            'basenet.slice4.39',
         ]
     ]
 
@@ -67,7 +67,7 @@ def upconv(x, n, filters):
                             strides=1,
                             padding='same',
                             name=f'upconv{n}.conv.3')(x)
-    x = keras.layers.BatchNormalization(epsilon=1e-5, momentum=0.9, name=f'upconv{n}.conv.4')(x)
+    # x = keras.layers.BatchNormalization(epsilon=1e-5, momentum=0.9, name=f'upconv{n}.conv.4')(x)
     x = keras.layers.Activation('relu', name=f'upconv{n}.conv.5')(x)
     return x
 
@@ -94,7 +94,7 @@ def upconv(x, n, filters):
 #             return (input_shape[0][0], ) + input_shape[1][1:3] + (input_shape[0][-1], )
 
 def build_model(weights_path: str = None):
-    inputs = keras.layers.Input((None, None, 1))
+    inputs = keras.layers.Input((512, 512, 1),name='input')
     s1, s2, s3, s4 = build_vgg_backbone(inputs)
     s5 = keras.layers.MaxPooling2D(pool_size=3, strides=1, padding='same',
                                    name='basenet.slice5.0')(s4)
@@ -112,9 +112,9 @@ def build_model(weights_path: str = None):
                              name='basenet.slice5.2')(s5)
     s5 = keras.layers.Concatenate(name='cont1')([s5, s4])
     s5 = upconv(s5, n=1, filters=512)
-    target_shape = keras.backend.shape(s3)
-
-    s5 = tf.image.resize(s5,size=(target_shape[1], target_shape[2]),name='resize1')
+    # target_shape = keras.backend.shape(s3)
+    #
+    # s5 = tf.image.resize(s5,size=(target_shape[1], target_shape[2]),name='resize1')
 
     # compat.v1.image.resize_bilinear(s5,
     #                                    size=(target_shape[1], target_shape[2]),

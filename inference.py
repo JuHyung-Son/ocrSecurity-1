@@ -55,4 +55,5 @@ prediction_groups = pipeline.recognize(images)
 fig, axs = plt.subplots(nrows=len(images), figsize=(20, 20))
 # for ax, image, predictions in zip(axs, images, prediction_groups):
 ocr7.utils.drawAnnotations(image=images[0], predictions=prediction_groups[0], ax=axs)
-fig.savefig('/root/optimization/ocrSecurity/full_figure.png')
+output_name=os.path.basename(config.image_file)
+fig.savefig('/root/optimization/ocrSecurity/output'+output_name)
