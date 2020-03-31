@@ -5,6 +5,7 @@ import io
 import cv2
 import json
 import typing
+import random
 
 import numpy as np
 
@@ -28,11 +29,14 @@ def read_tool(filepath_or_buffer: typing.Union[str, io.BytesIO]):
         image = cv2.imread(filepath_or_buffer)
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-def get_gaussian_heatmap(size=512, distanceRatio=3.34):
+def get_gaussian_heatmap(size=512, distanceRatio=3.3):
+    dis_ratio = random.randint(32, 35)
+    dis_ratio /= 10.0
     v = np.abs(np.linspace(-size / 2, size / 2, num=size))
     x, y = np.meshgrid(v, v)
     g = np.sqrt(x**2 + y**2)
-    g *= distanceRatio / (size / 2)
+    #g *= distanceRatio / (size / 2)
+    g *= dis_ratio / (size / 2)
     g = np.exp(-(1 / 2) * (g**2))
     g *= 255
     return g.clip(0, 255).astype('uint8')
