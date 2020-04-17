@@ -1,15 +1,15 @@
 import numpy as np
 
-import keras_ocr
+import ocr7
 
 
 def test_pipeline():
-    pipeline = keras_ocr.pipeline.Pipeline()
+    pipeline = ocr7.ocr_model.Pipeline()
 
     # We shouldn't find any text in a blank image.
     assert len(pipeline.recognize(images=[np.zeros((256, 256, 3), dtype='uint8')])[0]) == 0
 
-    image = keras_ocr.tools.read('tests/test_image.jpg')
+    image = ocr7.utils.read('tests/test_image.jpg')
 
     # Predictions is a list of (text, box) tuples.
     predictions = pipeline.recognize(images=[image])[0]

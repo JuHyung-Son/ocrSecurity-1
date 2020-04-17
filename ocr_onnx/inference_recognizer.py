@@ -1,5 +1,5 @@
 import time, datetime, argparse, cv2, os
-from models.model_train_recognizer import Model_Train
+from models.model_inference_recognizer import Model_Inference
 from utils.utils import *
 from datagenerator.genGenerator import read_record_single_cls, apply_aug_single_cls
 import tensorflow as tf
@@ -43,27 +43,49 @@ config.summary_dir += expname ; check_folder(config.summary_dir)
                       prepare dataset
 ===========================================================
 """
-# read dataset
+# read image
+config.image_file1 = '/root/optimization/~.jpg'
 
-dataset = read_record_single_cls('datagenerator/images.tfrecords',batch_size = config.batch_size)
+ID = 0
+
+if ID is 0:
+    img = cv2.imread(config.image_file1)[...,::-1] #convert to rgb
+    img = img[27:90,90:368,0]
+    img = np.reshape(cv2.resize(img,(320,320)),(320,320,1))
+else:
+    img = cv2.imread(config.image_file1)[..., ::-1]  # convert to rgb
+    img = img[10:40, 20:120, 0]
+    img = np.reshape(cv2.resize(img, (320, 320)), (320, 320, 1))
+
+temp_img = img
+
+"""resize image"""
+H, W, _ = img.shape
+H,W = (250,int(W*250/H)) if H<W else (int(H*250/W),250)
+img = cv2.resize(img,(H,W))
+
+"""reshape image"""
+img = np.expand_dims(img,axis=0)
+img = np.expand_dims(img,axis=3)
+img = normalize(img)
+print(img.shape)
+
 """
 ===========================================================
                       build model
 ===========================================================
 """
-model = Model_Train(config)
+model = Model_Inference(config,target_image=img)
+model.restore()
 
 
-for e in range(config.epoch):
-    for i, image_features in enumerate(dataset):
-        # print(image_features)
-        data = apply_aug_single_cls(image_features, config.batch_size)
-        #
-        log = model.train_step(data)
-        print("[epoch {} train step {}] step : {}".format(e,i,log))
-    if e % 10 == 0:
-        save_path = model.save(e)
-    model.train_loss.reset_states()
-    model.train_acc.reset_states()
+"""
+===========================================================
+                         inference
+===========================================================
+"""
+output = model.inference()
+print(output)
 
-config = parser.parse_args()
+cv2.imshow("img",temp_img)
+cv2.waitKey(0)

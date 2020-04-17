@@ -30,8 +30,7 @@ class Model_Train():
 
     def build_model(self):
         """model"""
-        self.model = build_model(alphabet=28, height=200, width=200, color=False, filters=(64, 128, 256, 256, 512, 512, 512),
-                                 rnn_units=(128, 128), dropout=0.1,rnn_steps_to_discard=2, pool_size=2, stn=True)
+        self.model = build_model()
         learning_rate = 0.0001
         self.optimizer = tf.keras.optimizers.Adam(learning_rate)
         self.model.summary()

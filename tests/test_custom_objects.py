@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-import keras_ocr
+import ocr7
 
 
 def test_per_layer_lr_multiplier():
@@ -34,11 +34,11 @@ def test_per_layer_lr_multiplier():
     # We want to make sure that serialization works so
     # we try it both with a directly instantiated optimizer
     # as well as a deserialized wrapper.
-    optimizer1 = keras_ocr.custom_objects.LearningRateMultiplier(
+    optimizer1 = ocr7.custom_objects.LearningRateMultiplier(
         optimizer=tf.keras.optimizers.SGD(1e-3), lr_multipliers=lr_multipliers1)
     optimizer2 = tf.keras.utils.deserialize_keras_object(
         tf.keras.utils.serialize_keras_object(optimizer1))
-    optimizer3 = keras_ocr.custom_objects.LearningRateMultiplier(
+    optimizer3 = ocr7.custom_objects.LearningRateMultiplier(
         optimizer=tf.keras.optimizers.SGD(1e-3), lr_multipliers=lr_multipliers2)
     optimizer4 = tf.keras.utils.deserialize_keras_object(
         tf.keras.utils.serialize_keras_object(optimizer3))
